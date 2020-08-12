@@ -4,9 +4,9 @@ using System.Text;
 
 namespace EmailSender.BLL.ViewModels
 {
-    public class CreateForGroupViewModel
+    public class AddRecipientToGroupViewModel
     {
-        public Guid TemplateId { get; set; }
+        public Guid UserId { get; set; }
         public Guid GrouId { get; set; }
 
     }

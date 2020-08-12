@@ -6,7 +6,7 @@ namespace EmailSender.DAL.Entity
 {
     public class RecipientInGroup : BaseEntity
     {
-        public Guid RecepientId { get; set; }
+        public Guid RecipientId { get; set; }
         public Guid GroupId { get; set; }
         public virtual Recipient Recipient { get; set; }
         public virtual Group Group { get; set; }

@@ -42,16 +42,16 @@ namespace EmailSender.DAL.Repository
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Update(Guid id, TEntity entity)
+        public async Task Update( TEntity entity)
         {
             _dbContext.Set<TEntity>().Update(entity);
             await _dbContext.SaveChangesAsync();
         }
 
-        public void UpdateBatch(IEnumerable<TEntity> entities)
+        public async Task UpdateBatch(IEnumerable<TEntity> entities)
         {
             _dbContext.Set<TEntity>().UpdateRange(entities);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task Delete(Guid id)

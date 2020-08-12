@@ -53,9 +53,8 @@ namespace EmailSender.DAL.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     CreationDate = table.Column<DateTime>(nullable: false),
-                    RecepientId = table.Column<Guid>(nullable: false),
-                    GroupId = table.Column<Guid>(nullable: false),
-                    RecipientId = table.Column<Guid>(nullable: true)
+                    RecipientId = table.Column<Guid>(nullable: false),
+                    GroupId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -71,7 +70,7 @@ namespace EmailSender.DAL.Migrations
                         column: x => x.RecipientId,
                         principalTable: "Recipients",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

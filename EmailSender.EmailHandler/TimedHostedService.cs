@@ -4,7 +4,6 @@ using EmailSender.DAL.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,33 +15,31 @@ namespace EmailSender.EmailHandler
         public ConsumeScopedServiceHostedService(IServiceProvider services)
         {
             Services = services;
-            using (var scope = Services.CreateScope())
-            {
-                var scopedProcessingService =
-                    scope.ServiceProvider
-                        .GetRequiredService<IEmailService>();
-                scopedProcessingService.ResetFailedEmails();
-            }
         }
 
         public IServiceProvider Services { get; }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-
-            await DoWork(stoppingToken);
-        }
-
-        private async Task DoWork(CancellationToken stoppingToken)
-        {
-
             using (var scope = Services.CreateScope())
             {
                 var scopedProcessingService =
                     scope.ServiceProvider
-                        .GetRequiredService<IScopedProcessingService>();
+                        .GetRequiredService<IEmailService>();
 
-                await scopedProcessingService.DoWork(stoppingToken);
+                await scopedProcessingService.ResetFailedEmails();
+            }
+
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                using (var scope = Services.CreateScope())
+                {
+                    IServiceProvider serviceProvider = scope.ServiceProvider;
+                    var service = serviceProvider.GetRequiredService<IScopedProcessingService>();
+                    await service.DoWork(stoppingToken);
+                }
+                //Add a delay between executions.
+                await Task.Delay(1000, stoppingToken);
             }
         }
 

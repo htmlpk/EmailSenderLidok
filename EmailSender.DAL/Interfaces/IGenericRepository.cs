@@ -12,8 +12,8 @@ namespace EmailSender.DAL
         Task<TEntity> GetById(Guid id);
         Task Create(TEntity entity);
         Task CreateBatch(IEnumerable<TEntity> entity);
-        Task Update(Guid id, TEntity entity);
-        void UpdateBatch(IEnumerable<TEntity> entities);
+        Task Update(TEntity entity);
+        Task UpdateBatch(IEnumerable<TEntity> entities);
         Task Delete(Guid id);
     }
 }

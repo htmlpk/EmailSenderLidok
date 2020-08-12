@@ -8,5 +8,6 @@ public class AutoMapping : Profile
     {
         CreateMap<Recipient, RecipientDTO>();
         CreateMap<Group, GroupDTO>();
+        CreateMap<Template, TemplateDTO>();
     }
 }

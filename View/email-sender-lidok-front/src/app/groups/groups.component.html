@@ -1,0 +1,7 @@
+<div *ngFor="let group of groups">
+    <!-- <div style="background-color: red;">{{recipient}}</div> -->
+    <group [group]="group"></group>
+</div>
+
+<button *ngIf="!createMode" (click)="toggleCreateMode()">Create</button>
+<group  style="display: block;"  *ngIf="createMode" [createMode]="true" (onGroupCreated)="onGroupCreate($event)"></group>

@@ -25,7 +25,7 @@ namespace EmailSenderLidok.Controllers
             return await _service.GetAll();
         }
 
-        [HttpPost("/create")]
+        [HttpPost]
         public async Task Create([FromBody]AddTemplateViewModel model)
         {
             await _service.Create(model);

@@ -12,15 +12,25 @@ namespace EmailSender.DAL.Repository
     public class EmailRepository : GenericRepository<Email>, IEmailRepository
     {
         ApplicationContext _context;
+        private static object _lock = new object();
         public EmailRepository(ApplicationContext dbContext)
             : base(dbContext)
         {
             _context = dbContext;
         }
 
+        public new async Task Create(Email entity)
+        {
+            lock (_lock)
+            {
+                _context.Emails.AddAsync(entity);
+                _context.SaveChangesAsync();
+            }
+        }
+
         public async Task<IEnumerable<Email>> GetNewWithTemplates()
         {
-            return await _context.Emails.Include(e=>e.Template).Include(e => e.Recipient).Where(em=>em.Status == Enums.EmailStatus.New).AsNoTracking().ToListAsync();
+           return await _context.Emails.Include(e => e.Template).Include(e => e.Recipient).Where(em => em.Status == Enums.EmailStatus.New).AsNoTracking().ToListAsync();
         }
         public IQueryable<Email> GetAllFailed()
         {

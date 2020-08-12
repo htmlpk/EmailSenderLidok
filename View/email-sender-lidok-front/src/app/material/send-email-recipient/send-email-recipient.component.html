@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>Choose the template please</h1>
+<div mat-dialog-content>
+  <p>Template</p>
+  <!-- <select (change)="onChange($event.target.value)">
+      <option  *ngFor="let template of templates" [value]="template?.subject">{{template?.subject}}</option>
+  </select> -->
+  <button (click)="onSendClick()"></button>
+  <!-- <select [items]="templates" bindLabel="subject" placeholder="Select template" [ngModelOptions]="{standalone: true}"
+    [(ngModel)]="selectedTemplate">
+  </select> -->
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button mat-dialog-close (click)="onSendClick()" cdkFocusInitial
+    [disabled]="selectedTemplate==null">Send</button>
+</div>
+
+
+<!-- Copyright 2020 Google LLC. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->

@@ -19,19 +19,19 @@ namespace EmailSenderLidok.Controllers
             _service = service;
         }
 
-        [HttpGet]
+        //[HttpGet]
         //public async Task<IEnumerable<EmailDTO>> Get()
         //{
         //    return await _service.GetAll();
         //}
 
-        [HttpPost("/createSingle")]
+        [HttpPost("createSingle")]
         public async Task Create([FromBody]AddEmailToRecipientViewModel model)
         {
             await _service.CreateForRecipient(model);
         }
 
-        [HttpPost("/createGroup")]
+        [HttpPost("createGroup")]
         public async Task Create([FromBody]AddEmailToGroupViewModel model)
         {
             await _service.CreateForGroup(model);

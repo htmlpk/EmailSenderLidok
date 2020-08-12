@@ -8,5 +8,6 @@ namespace EmailSender.BLL.DTO
     public class RecipientDTO : BaseEntity
     {
         public string Email { get; set; }
+        public List<string> GroupNames { get; set; }
     }
 }

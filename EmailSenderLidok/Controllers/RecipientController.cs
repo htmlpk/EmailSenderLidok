@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using EmailSender.BLL.DTO;
 using EmailSender.BLL.Services.Interface;
 using EmailSender.BLL.ViewModels;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmailSenderLidok.Controllers
@@ -22,7 +23,7 @@ namespace EmailSenderLidok.Controllers
         [HttpGet]
         public async Task<IEnumerable<RecipientDTO>> Get()
         {
-            return await _service.GetAll();
+            return await _service.GetAllWithGroup();
         }
 
         [HttpPost]

@@ -1,0 +1,33 @@
+<div class="template" *ngIf="!createMode">
+    <div>
+        <div>
+            <p>Subject {{template.subject}}</p>
+            <p>Body: {{template.body}}</p>
+        </div>
+        <div>
+            <button>Send</button>
+        </div>
+
+    </div>
+</div>
+
+<div class="template" *ngIf="createMode">
+    <form [formGroup]="templateCreation">
+        <div>
+            <input type="text" placeholder="Subject" (change)="change()" [(ngModel)]="template.subject"
+                formControlName="subject">
+                <!-- {{templateCreation.controls.subject.touched && templateCreation.controls.subject.errors.required!=null}}
+                {{templateCreation.controls.subject.errors.minlength!=null}}
+                {{templateCreation.controls.body.touched && templateCreation.controls.body.errors.require!=null}}
+                {{templateCreation.controls.body.errors.minlength!=null}} -->
+            <span *ngIf="templateCreation.controls.subject.touched && templateCreation.controls.subject.errors?.required">Required field!</span>
+            <span *ngIf="templateCreation.controls.subject.errors?.minlength!=null">Minimum 6 chars!</span>
+            <input type="text" placeholder="Body"  (change)="change()" [(ngModel)]="template.body" formControlName="body">
+            <span *ngIf="templateCreation.controls.body.touched && templateCreation.controls.body.errors?.required">Required field!</span>
+            <span *ngIf="templateCreation.controls.body.errors?.minlength!=null">Minimum 20 chars!</span>
+        </div>
+        <div>
+            <button [disabled]="!templateCreation.valid" (click)="saveTemplate()">Create</button>
+        </div>
+    </form>
+</div>

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmailSender.DAL.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20200807141601_Initial")]
+    [Migration("20200810135001_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -94,10 +94,7 @@ namespace EmailSender.DAL.Migrations
                     b.Property<Guid>("GroupId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("RecepientId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("RecipientId")
+                    b.Property<Guid>("RecipientId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -154,7 +151,9 @@ namespace EmailSender.DAL.Migrations
 
                     b.HasOne("EmailSender.DAL.Entity.Recipient", "Recipient")
                         .WithMany("RecipientInGroups")
-                        .HasForeignKey("RecipientId");
+                        .HasForeignKey("RecipientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

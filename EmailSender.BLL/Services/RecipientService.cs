@@ -29,6 +29,13 @@ namespace EmailSender.BLL.Services
             return recipientsDTO;
         }
 
+        public async Task<IEnumerable<RecipientDTO>> GetAllWithGroup()
+        {
+            var recipients = await _repo.GetAllWithGroup();
+            var recipientsDTO = recipients.Select(rec => RecipientToDTO(rec));
+            return recipientsDTO;
+        }
+
         public async Task Create(AddRecipientViewModel model)
         {
             var recipient = new Recipient();
@@ -38,6 +45,16 @@ namespace EmailSender.BLL.Services
         public async Task Delete(Guid id)
         {
             await _repo.Delete(id);
+        }
+
+        private RecipientDTO RecipientToDTO(Recipient entity)
+        {
+            var model = new RecipientDTO();
+            model.Id = entity.Id;
+            model.CreationDate = entity.CreationDate;
+            model.Email = entity.Email;
+            model.GroupNames = entity.RecipientInGroups.Select(rig => rig.Group.Name).ToList();
+            return model;
         }
     }
 }

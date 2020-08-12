@@ -10,6 +10,8 @@ namespace EmailSender.BLL.Services.Interface
     {
         public Task<IEnumerable<GroupDTO>> GetAll();
         public Task Create(AddGroupViewModel model);
+        public Task AddRicipientToGroup(AddRecipientToGroupViewModel model);
+        public Task<IEnumerable<GroupDTO>> GetWithRecipients();
         public Task Delete(Guid id);
     }
 }

@@ -1,0 +1,24 @@
+<div *ngIf="!createMode">
+    <div>
+        <p>Name {{group.name}}</p>
+        <p>Recipients: <span *ngFor="let recipient of group.recipients">{{recipient.email}}</span></p>
+    </div>
+    <div>
+        <button>Send</button>
+    </div>
+</div>
+
+<div class="template" *ngIf="createMode">
+    <form [formGroup]="groupCreation">
+        <div>
+            <input type="text" placeholder="name" [(ngModel)]="group.name"
+                formControlName="name">
+            <span *ngIf="groupCreation.controls.name.touched && groupCreation.controls.name.errors?.required">Required field!</span>
+            <span *ngIf="groupCreation.controls.name.touched && groupCreation.controls.name.errors?.minlenght">Minimum 6 characters!</span>
+            
+        </div>
+        <div>
+            <button [disabled]="!groupCreation.valid" (click)="createGroup()">Create</button>
+        </div>
+    </form>
+</div>

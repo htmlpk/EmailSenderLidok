@@ -1,5 +1,6 @@
 ﻿using EmailSender.BLL.Services.Interface;
 using EmailSender.BLL.ViewModels;
+using EmailSender.DAL.Context;
 using EmailSender.DAL.Entity;
 using EmailSender.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -24,11 +25,11 @@ namespace EmailSender.BLL.Services
         {
             var failedEmails = _emailRepo.GetAllFailed();
             await failedEmails.ForEachAsync(e => e.Status = DAL.Enums.EmailStatus.New);
-            _emailRepo.UpdateBatch(failedEmails);
+            await _emailRepo.UpdateBatch(failedEmails);
         }
         public async Task CreateForGroup(AddEmailToGroupViewModel model)
         {
-            var recipientIds = (await _repo.GetAll()).Where(rig => rig.GroupId == model.GroupId).Select(g => g.RecepientId);
+            var recipientIds = (await _repo.GetAll()).Where(rig => rig.GroupId == model.GroupId).Select(g => g.RecipientId);
             var emails = recipientIds.Select(rId => new Email(rId, model.TemplateId));
             await _emailRepo.CreateBatch(emails);
         }

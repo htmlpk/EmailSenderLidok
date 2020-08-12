@@ -22,13 +22,19 @@ namespace EmailSenderLidok.Controllers
         [HttpGet]
         public async Task<IEnumerable<GroupDTO>> Get()
         {
-            return await _service.GetAll();
+            return await _service.GetWithRecipients();
         }
 
         [HttpPost]
         public async Task Create([FromBody]AddGroupViewModel model)
         {
             await _service.Create(model);
+        }
+
+        [HttpPost("addRecipientToGroup")]
+        public async Task AddRecepientToGroup([FromBody]AddRecipientToGroupViewModel model)
+        {
+            await _service.AddRicipientToGroup(model);
         }
 
         [HttpDelete]

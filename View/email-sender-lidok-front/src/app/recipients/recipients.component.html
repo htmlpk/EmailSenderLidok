@@ -1,0 +1,7 @@
+<div *ngFor="let recipient of recipients">
+    <!-- <div style="background-color: red;">{{recipient}}</div> -->
+    <recipient [recipient]="recipient" (onEmailSended)="onEmailSend($event)"></recipient>
+</div>
+
+<button *ngIf="!createMode" (click)="toggleCreateMode()">Create</button>
+<recipient  style="display: block;"  *ngIf="createMode" [createMode]="true" (onRecipientCreated)="onRecipientCreate($event)"></recipient>

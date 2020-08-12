@@ -9,6 +9,7 @@ using EmailSender.BLL.Services;
 using System.Threading.Tasks;
 using EmailSender.EmailHandler.Interface;
 using EmailSender.EmailHandler;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace EmailSenderLidok
 {
@@ -24,11 +25,13 @@ namespace EmailSenderLidok
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+
             services.AddControllersWithViews();
 
             services.AddControllers();
             services.AddSwaggerGen(c => c.SwaggerDoc(name: "v1", new OpenApiInfo { Title = "Email sender API", Version = "V1" }));
+            //services.AddCors();
+            services.AddCors();
             EmailSender.BLL.Startup.ConfigureServices(services);
             EmailSender.DAL.Startup.ConfigureServices(services, Configuration);
             ConfigureScopedServices(services);
@@ -41,6 +44,7 @@ namespace EmailSenderLidok
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader());
 
             app.UseHttpsRedirection();
 
@@ -62,7 +66,6 @@ namespace EmailSenderLidok
             services.AddScoped<IGroupService, GroupService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ITemplateService, TemplateService>();
-            //services.AddHostedService<TimedHostedService>();
             services.AddHostedService<ConsumeScopedServiceHostedService>();
             services.AddScoped<EmailSender.EmailHandler.IScopedProcessingService, ScopedProcessingService>();
         }
