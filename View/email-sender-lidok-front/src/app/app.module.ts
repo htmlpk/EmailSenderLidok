@@ -1,13 +1,13 @@
 // import './polyfills';
 
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, NgModel } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
-// import {MaterialModule} from './material/material.module';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
+import {MaterialModule} from './material/material.module';
 import { RecipientsComponent } from './recipients/recipients.component';
 import { RecipientComponent } from './recipients/recipient/recipient.component';
 import { GroupsComponent } from './groups/groups.component';
@@ -17,26 +17,36 @@ import { TemplateComponent } from './templates/template/template.component';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SendEmailRecipient } from './material/send-email-recipient/send-email-recipient.component';
+import { AddRecipientToGroup } from './material/add-user-to-group/add-user-to-group.component';
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import {MatSelectModule} from '@angular/material/select';
+import { MatRippleModule } from '@angular/material/core';
+import { NgxSelectModule, INgxSelectOptions } from 'ngx-select-ex';
 
-
+// const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
+//   optionValueField:'id',
+//   optionTextField: 'subject',
+//   keepSelectedItems:true,
+// };
 @NgModule({
   imports: [
+    BrowserAnimationsModule,
+    BsDropdownModule.forRoot(),
     FormsModule,
     BrowserModule,
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    // MaterialModule,
     CommonModule,
-    // MatDialogRef,
-    NgSelectModule,
     MatDialogModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgxSelectModule
   ],
-  entryComponents: [SendEmailRecipient],
+  entryComponents: [SendEmailRecipient,
+    AddRecipientToGroup],
   declarations: [AppComponent,
     RecipientsComponent,
     RecipientComponent,
@@ -44,18 +54,14 @@ import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
     GroupComponent,
     TemplatesComponent,
     TemplateComponent,
+    SendEmailRecipient,
+    AddRecipientToGroup
     ],
-  // exports: [AppComponent,
-  //   RecipientsComponent,
-  //   RecipientComponent,
-  //   GroupsComponent,
-  //   GroupComponent,
-  //   TemplatesComponent,
-  //   TemplateComponent],
   bootstrap: [AppComponent],
   providers: [
-    // { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
-  ]
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
+  ],
+  schemas: [NO_ERRORS_SCHEMA]
 })
 export class AppModule { }
 

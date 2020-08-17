@@ -48,7 +48,7 @@ namespace EmailSender.BLL.Services
         {
             var recipientInGroup = new RecipientInGroup();
             recipientInGroup.RecipientId = model.UserId;
-            recipientInGroup.GroupId = model.GrouId;
+            recipientInGroup.GroupId = model.GroupId;
             await _rigRepo.Create(recipientInGroup);
         }
         public async Task Delete(Guid id)

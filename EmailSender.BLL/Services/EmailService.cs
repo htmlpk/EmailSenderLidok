@@ -15,15 +15,17 @@ namespace EmailSender.BLL.Services
     {
         private IEmailRepository _emailRepo;
         private IRecipientInGroupRepository _repo;
+        private IEmailHandlerRepository _emailHandlerRepository;
 
-        public EmailService(IEmailRepository emailRepo, IRecipientInGroupRepository repo)
+        public EmailService(IEmailRepository emailRepo, IRecipientInGroupRepository repo, IEmailHandlerRepository emailHandlerRepository)
         {
             _emailRepo = emailRepo;
             _repo = repo;
+            _emailHandlerRepository = emailHandlerRepository;
         }
         public async Task ResetFailedEmails()
         {
-            var failedEmails = _emailRepo.GetAllFailed();
+            var failedEmails = _emailHandlerRepository.GetAllFailed();
             await failedEmails.ForEachAsync(e => e.Status = DAL.Enums.EmailStatus.New);
             await _emailRepo.UpdateBatch(failedEmails);
         }

@@ -1,6 +1,4 @@
-﻿using EmailSender.BLL.Services;
-using EmailSender.BLL.Services.Interface;
-using EmailSender.DAL.Interfaces;
+﻿using EmailSender.BLL.Services.Interface;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;

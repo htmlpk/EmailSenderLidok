@@ -12,9 +12,9 @@ namespace EmailSender.DAL.Repository
     public class GenericRepository<TEntity> : IGenericRepository<TEntity>
     where TEntity : class, IEntity
     {
-        private readonly ApplicationContext _dbContext;
+        private readonly DbContext _dbContext;
 
-        public GenericRepository(ApplicationContext dbContext)
+        public GenericRepository(DbContext dbContext)
         {
             _dbContext = dbContext;
         }

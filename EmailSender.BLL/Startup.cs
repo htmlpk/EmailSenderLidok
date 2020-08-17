@@ -10,11 +10,12 @@ namespace EmailSender.BLL
         public static void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(Startup));
-            services.AddScoped<IRecipientRepository, RecipientRepository>();
-            services.AddScoped<IGroupRepository, GroupRepository>();
-            services.AddScoped<IEmailRepository, EmailRepository>();
-            services.AddScoped<IRecipientInGroupRepository, RecipientInGroupRepository>();
-            services.AddScoped<ITemplateRepository, TemplateRepository>();
+            services.AddTransient<IRecipientRepository, RecipientRepository>();
+            services.AddTransient<IGroupRepository, GroupRepository>();
+            services.AddTransient<IEmailRepository, EmailRepository>();
+            services.AddTransient<IRecipientInGroupRepository, RecipientInGroupRepository>();
+            services.AddTransient<ITemplateRepository, TemplateRepository>();
+            services.AddTransient<IEmailHandlerRepository, EmailHandlerRepository>();
         }
     }
     

@@ -24,6 +24,7 @@ export class TemplatesComponent implements OnInit {
     await this.templateService.create(template).subscribe(() => {
       this.templates.push(template)
     });
+    this.createMode = !this.createMode
   }
 
   public toggleCreateMod(){

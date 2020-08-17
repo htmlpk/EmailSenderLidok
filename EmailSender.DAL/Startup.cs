@@ -12,7 +12,9 @@ namespace EmailSender.DAL
             string connection = configuration.GetConnectionString("DefaultConnection");
             // добавляем контекст MobileContext в качестве сервиса в приложение
             services.AddDbContext<ApplicationContext>(options =>
-                options.UseSqlServer(connection), ServiceLifetime.Singleton);
+                options.UseSqlServer(connection));
+            services.AddDbContext<HostedContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")),ServiceLifetime.Transient);
         }
     }
 }

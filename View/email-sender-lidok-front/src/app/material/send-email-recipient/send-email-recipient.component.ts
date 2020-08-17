@@ -8,7 +8,7 @@ import { TemplateService } from '../../shared/services/template.service';
   templateUrl: 'send-email-recipient.component.html',
 })
 export class SendEmailRecipient implements OnInit {
-  public selectedTemplate: Template;
+  public selectedTemplateId: string;
   public templates: Template[];
 
   constructor(
@@ -27,11 +27,6 @@ export class SendEmailRecipient implements OnInit {
   }
 
   onSendClick(): void {
-    this.dialogRef.close("DDFDC773-E5B1-4D52-8004-0598B1E1F031");
+    this.dialogRef.close(this.selectedTemplateId);
   }
-
-  onChange(val) {
-    this.selectedTemplate = val;
-  }
-
 }

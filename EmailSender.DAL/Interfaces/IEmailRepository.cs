@@ -7,7 +7,6 @@ namespace EmailSender.DAL.Interfaces
 {
     public interface IEmailRepository : IGenericRepository<Email>
     {
-        public Task<IEnumerable<Email>> GetNewWithTemplates();
-        public IQueryable<Email> GetAllFailed();
+        public Task Create(Email entity);
     }
 }

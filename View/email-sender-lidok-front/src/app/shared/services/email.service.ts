@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { BaseService } from './base/base.service';
-import { SendEmailRecipientModel } from '../models/send-email-recipient.model';
+import { SendEmailRecipientModel, SendEmailGroupModel } from '../models/send-email-recipient.model';
 import { Email } from '../models/email.model';
 import { Observable } from 'rxjs';
 
@@ -17,4 +17,7 @@ export class EmailService extends BaseService<Email> {
        return await this.http.post(`${environment.apiUrl}email/createSingle`,model) as Observable<null>;
    }
 
+   public async createGroup(model:SendEmailGroupModel){
+    return await this.http.post(`${environment.apiUrl}email/createGroup`,model) as Observable<null>;
+}
 }

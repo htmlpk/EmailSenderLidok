@@ -1,14 +1,15 @@
-<div *ngIf="!createMode">
+<div *ngIf="!createMode" class="item-block">    
     <div>
         <p>Name {{group.name}}</p>
-        <p>Recipients: <span *ngFor="let recipient of group.recipients">{{recipient.email}}</span></p>
+        <p>Recipients: <span *ngFor="let recipient of group.recipients">{{recipient.email}} </span></p>
     </div>
     <div>
-        <button>Send</button>
+        <button  (click)="sendEmailToGroup()">Send</button>
+        <button  (click)="addRecipient()">Add recipient</button>
     </div>
 </div>
 
-<div class="template" *ngIf="createMode">
+<div class="item-block" *ngIf="createMode">
     <form [formGroup]="groupCreation">
         <div>
             <input type="text" placeholder="name" [(ngModel)]="group.name"
