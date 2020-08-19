@@ -1,5 +1,3 @@
-// import './polyfills';
-
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, NgModel } from '@angular/forms';
@@ -25,12 +23,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import {MatSelectModule} from '@angular/material/select';
 import { MatRippleModule } from '@angular/material/core';
 import { NgxSelectModule, INgxSelectOptions } from 'ngx-select-ex';
+import {Sidenav} from './material/sidenav/sidenav.component'
 
-// const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
-//   optionValueField:'id',
-//   optionTextField: 'subject',
-//   keepSelectedItems:true,
-// };
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -55,7 +49,8 @@ import { NgxSelectModule, INgxSelectOptions } from 'ngx-select-ex';
     TemplatesComponent,
     TemplateComponent,
     SendEmailRecipient,
-    AddRecipientToGroup
+    AddRecipientToGroup,
+    Sidenav
     ],
   bootstrap: [AppComponent],
   providers: [

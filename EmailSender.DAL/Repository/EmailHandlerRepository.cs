@@ -21,34 +21,25 @@ namespace EmailSender.DAL.Repository
 
         public async Task<IEnumerable<Email>> GetNewWithTemplates()
         {
-           return await _hostedContext.Emails.Include(e => e.Template).Include(e => e.Recipient).Where(em => em.Status == Enums.EmailStatus.New).AsNoTracking().ToListAsync();
+           return await _hostedContext.Emails
+                .Include(e => e.Template)
+                .Include(e => e.Recipient)
+                .Where(em => em.Status == Enums.EmailStatus.New)
+                //.AsNoTracking()
+                .ToListAsync();
         }
         public IQueryable<Email> GetAllFailed()
         {
             return _hostedContext.Emails.Where(e => e.Status != EmailStatus.Finished);
         }
 
+
         #region IDisposable Support
-        //private bool disposedValue = false; // To detect redundant calls
 
-        //protected virtual void Dispose(bool disposing)
-        //{
-        //    if (!disposedValue)
-        //    {
-        //        if (disposing)
-        //        {
-        //            _context.Dispose();
-        //        }
-
-        //        disposedValue = true;
-        //    }
-        //}
-
-       
-        //public void Dispose()
-        //{
-        //    Dispose(true);
-        //}
+        public void Dispose()
+        {
+            this._hostedContext.Dispose();
+        }
         #endregion
     }
 }

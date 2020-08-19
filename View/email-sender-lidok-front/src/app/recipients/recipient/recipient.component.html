@@ -1,4 +1,4 @@
-<div *ngIf="!createMode">
+<div *ngIf="!createMode" class="item-block">
     <div>
         <p>Email {{recipient.email}}</p>
         <p>Group names <span *ngFor="let groupName of recipient.groupNames">{{groupName}}</span></p>
@@ -10,7 +10,7 @@
 
 </div>
 
-<div class="template" *ngIf="createMode">
+<div class="item-block" *ngIf="createMode">
     <form [formGroup]="recipientCreation">
         <div>
             <input type="text" placeholder="email" (change)="change()" [(ngModel)]="recipient.email"

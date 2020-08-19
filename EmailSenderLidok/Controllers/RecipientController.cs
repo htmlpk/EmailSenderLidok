@@ -29,6 +29,7 @@ namespace EmailSenderLidok.Controllers
         [HttpPost]
         public async Task Create([FromBody]AddRecipientViewModel model)
         {
+
             await _service.Create(model);
         }
 

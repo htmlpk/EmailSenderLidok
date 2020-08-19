@@ -18,6 +18,7 @@ export class GroupComponent implements OnInit {
   @Output() onGroupCreated: EventEmitter<Group> = new EventEmitter();
   @Output() onSendEmail: EventEmitter<SendEmailGroupModel> = new EventEmitter();
   @Output() onRecipientAdd: EventEmitter<AddRecipientToGroupModel> = new EventEmitter();
+  @Output() onCancell: EventEmitter<null> = new EventEmitter();
 
   groupCreation = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.min(5)]),
@@ -48,8 +49,12 @@ export class GroupComponent implements OnInit {
     this.createMode = !this.createMode;
   }
 
+  public onCancel(){
+    this.createMode = !this.createMode;
+    this.onCancell.emit();
+  }
+
   public addRecipient(){
-    debugger
     const dialogRef = this.dialog.open(AddRecipientToGroup, {
       width: '600px',
       data:{users:this.group.recipients}

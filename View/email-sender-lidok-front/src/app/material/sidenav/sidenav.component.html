@@ -1,24 +1,18 @@
-<!-- <mat-drawer-container class="example-container" autosize>
-  <mat-drawer #drawer class="example-sidenav" mode="side">
-    <p>Auto-resizing sidenav</p>
-    <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
-    <button (click)="showFiller = !showFiller" mat-raised-button>
-      Toggle extra text
-    </button>
-  </mat-drawer>
+<ng-container >
+  <mat-toolbar class="example-header">Menu</mat-toolbar>
 
-  <div class="example-sidenav-content">
-    <button type="button" mat-button (click)="drawer.toggle()">
-      Toggle sidenav
-    </button>
-    <div>
-      
-    </div>
-  </div>
+  <mat-sidenav-container class="example-container column">
+    <a [routerLink]="['']">Recipients</a>
+    <a [routerLink]="['/groups']">Groups</a>
+    <a [routerLink]="['/templates']">Templates</a>
+    <!-- <mat-sidenav #sidenav mode="side" opened class="example-sidenav"
+                 [fixedInViewport]="options.value.fixed" [fixedTopGap]="options.value.top"
+                 [fixedBottomGap]="options.value.bottom">
+      {{options.value.fixed ? 'Fixed' : 'Non-fixed'}} Sidenav
+    </mat-sidenav> -->
 
-</mat-drawer-container>
--->
-
-<!-- Copyright 2020 Google LLC. All Rights Reserved.
-    Use of this source code is governed by an MIT-style license that
-    can be found in the LICENSE file at http://angular.io/license --> 
+    <!-- <mat-sidenav-content [formGroup]="options">
+      <p><mat-checkbox formControlName="fixed">Fixed</mat-checkbox></p>
+    </mat-sidenav-content> -->
+  </mat-sidenav-container>
+</ng-container>

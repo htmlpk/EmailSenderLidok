@@ -1,6 +1,8 @@
-<div *ngFor="let template of templates">
+<div *ngFor="let template of templates" class="item-block">
     <template style="display: block;" [template]="template" [createMode]="false" ></template>
 </div>
 
 <button *ngIf="!createMode" (click)="toggleCreateMod()">Create</button>
-<template  style="display: block;"  *ngIf="createMode" [createMode]="true" (onTemplateSaved)="onTemplateCreate($event)"></template>
+<div class="item-block" *ngIf="createMode">
+<template  style="display: block;"   [createMode]="true" (onTemplateSaved)="onTemplateCreate($event)"></template>
+</div>

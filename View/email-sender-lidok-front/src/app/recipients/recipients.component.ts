@@ -35,7 +35,6 @@ export class RecipientsComponent implements OnInit {
   }
 
   public async onEmailSend(model: SendEmailRecipientModel) {
-    debugger
     if(model.templateId)
     await (await this.emailService.createSingle(model)).subscribe()
   }

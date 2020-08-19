@@ -6,6 +6,7 @@ using EmailSender.DAL.Enums;
 using EmailSender.DAL.Interfaces;
 using EmailSender.DAL.Repository;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,34 +24,48 @@ namespace EmailSender.EmailHandler
     {
         private IEmailService _service;
         private IEmailHandlerRepository _repo;
-
-        public ScopedProcessingService(IEmailHandlerRepository repository)
+        DbContextOptions<HostedContext> _options;
+        IServiceProvider _resolver;
+        public ScopedProcessingService(IEmailService emailService, IEmailHandlerRepository repository, DbContextOptions<HostedContext> options, IServiceProvider resolver)
         {
             _repo = repository;
+            _options = options;
+            _resolver = resolver;
+            _service = emailService;
         }
 
         public async Task DoWork(CancellationToken stoppingToken)
         {
-            var emails = await _repo.GetNewWithTemplates();
-            if (emails.Count() > 0)
+            IEnumerable<Email> emails = null;
+            using (var repo = _resolver.GetService<IEmailHandlerRepository>())
             {
-                emails.ForAll(x => x.Status = EmailStatus.InProgress);
-                emails.ToList().ForEach(async (email) =>
+                emails = await repo.GetNewWithTemplates();
+                if (emails.Count() > 0)
                 {
-                    try
+                    emails.ForAll(x => x.Status = EmailStatus.InProgress);
+                    await repo.UpdateBatch(emails);
+                }
+            }
+
+            emails?.ToList().ForEach(async (email) =>
+            {
+                try
+                {
+                    using (var repo = new EmailHandlerRepository(new HostedContext(_options)))
                     {
-                        await _repo.Update(email);
                         _service.Send(email.Recipient.Email, email.Template.Subject, email.Template.Body);
                         email.Status = EmailStatus.Finished;
-                        await _repo.Update(email);
-                        Thread.Sleep(new Random().Next(1000, 40000));
+                        await repo.Update(email);
                     }
-                    catch (Exception ex)
-                    {
-                        email.Status = EmailStatus.New;
-                    }
-                });
-            }
+                    Thread.Sleep(new Random().Next(1000, 40000));
+                }
+                catch (Exception ex)
+                {
+                    email.Status = EmailStatus.New;
+                }
+            });
+
         }
     }
 }
+

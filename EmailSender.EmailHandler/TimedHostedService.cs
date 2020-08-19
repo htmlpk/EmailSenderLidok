@@ -27,17 +27,24 @@ namespace EmailSender.EmailHandler
 
                 await scopedProcessingService.ResetFailedEmails();
             }
-
-            while (!stoppingToken.IsCancellationRequested)
+            try
             {
                 using (var scope = Services.CreateScope())
                 {
-                    IServiceProvider serviceProvider = scope.ServiceProvider;
-                    var service = serviceProvider.GetRequiredService<IScopedProcessingService>();
-                    await service.DoWork(stoppingToken);
+                    while (!stoppingToken.IsCancellationRequested)
+                    {
+
+                        IServiceProvider serviceProvider = scope.ServiceProvider;
+                        var service = serviceProvider.GetRequiredService<IScopedProcessingService>();
+                        await service.DoWork(stoppingToken);
+                    }
+                    //Add a delay between executions.
+                    await Task.Delay(1000, stoppingToken);
                 }
-                //Add a delay between executions.
-                await Task.Delay(1000, stoppingToken);
+            }
+            catch (Exception e)
+            {
+                var exc = e;
             }
         }
 
